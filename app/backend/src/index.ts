@@ -1,12 +1,12 @@
 import express from 'express';
-import { CreateUserControllerFactory } from './factories/CreateUserControllerFactory';
+import userRoute from './routes/userRoute';
 
 const app = express();
 
-const createUserController = CreateUserControllerFactory.make();
+app.use(express.json());
 
-app.post('/user', (req, res) => createUserController.handle(req, res));
+app.use('/register', userRoute);
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+app.listen(3335, () => {
+  console.log('Server is running on port 3333');
 });
