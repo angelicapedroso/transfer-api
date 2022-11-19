@@ -23,4 +23,12 @@ export class User {
       throw new Error('INVALID_PASSWORD');
     }
   }
+
+  public getUsername() {
+    return this.username;
+  }
+
+  public getPassword() {
+    return this.password;
+  }
 }
