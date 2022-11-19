@@ -1,5 +1,5 @@
 import { User } from '../entities/User';
-import { IUser, IUserCreate } from '../interfaces/userInterface';
+import { IUserCreate } from '../interfaces/userInterface';
 import { generatePasswordHash } from '../helpers/generatePasswordHash';
 
 export interface CreateUserRepository {
@@ -11,8 +11,9 @@ export class CreateUserService {
 
   async create(user: IUserCreate) {
     const { username, password } = user;
-    const passwordHash = await generatePasswordHash(password);
-    const userEntity = new User(username, passwordHash);
-    await this.repository.create(userEntity);
+    const newUser = new User(username, password);
+    const passwordHash = generatePasswordHash(newUser.getPassword());
+    newUser.setPassword(generatePasswordHash(passwordHash));
+    await this.repository.create(newUser);
   }
 }
