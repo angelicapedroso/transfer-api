@@ -1,17 +1,23 @@
-import { User } from "../entities/User";
+import { User } from '../entities/User';
+import { IUser, IUserCreate } from '../interfaces/userInterface';
+import { generatePasswordHash } from '../helpers/generatePasswordHash';
 
-export interface createUserRepository {
-  create(user: User): Promise<{ id: number }>
+export interface CreateUserRepository {
+  create(user: User): Promise<{ user: IUser }>;
 }
 
 export class CreateUserService {
-  constructor(
-    private repository: createUserRepository,
-  ){}
+  constructor(private repository: CreateUserRepository) {}
 
-  async create(username: string, password: string) {
-    const user = new User(username, password);
-    const { id } = await this.repository.create(user);
-    return id;
+  async create(user: IUserCreate) {
+    const { username, password } = user;
+
+    const passwordHash = await generatePasswordHash(password);
+
+    const userEntity = new User(username, passwordHash);
+
+    const newUser = await this.repository.create(userEntity);
+
+    return newUser;
   }
 }
