@@ -1,10 +1,10 @@
-import { CreateUserController } from "../controllers/CreateUserController";
-import { CreateUserService } from "../services/CreateUserService";
-import { createUserRepository } from '../repositories/CreateUserRepository';
+import { PrismaCreateUserRepository } from '../repositories/CreateUserRepository';
+import { CreateUserService } from '../services/CreateUserService';
+import { CreateUserController } from '../controllers/CreateUserController';
 
 export class CreateUserControllerFactory {
   static make() {
-    const repository = new createUserRepository();
+    const repository = new PrismaCreateUserRepository();
     const service = new CreateUserService(repository);
     const controller = new CreateUserController(service);
 
