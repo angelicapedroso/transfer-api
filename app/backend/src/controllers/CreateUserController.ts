@@ -1,20 +1,18 @@
 import { CreateUserService } from './../services/CreateUserService';
-import { Request, Response } from 'express';
+import {
+  IController,
+  IRequest,
+  IResponse,
+} from '../adapters/controllerInterface';
 
-export class CreateUserController {
-  constructor(
-    private service: CreateUserService
-  ){}
+export class CreateUserController implements IController {
+  constructor(private service: CreateUserService) {}
 
-  async handle(req: Request, res: Response) {
-    const { username, password } = req.body;
-    try {
-      const id = await this.service.create(username, password);
-
-      return res.status(201).json({ id });
-    } catch (err) {
-        return res.status(400).json(err);
-      }
+  async handle(req: IRequest): Promise<IResponse> {
+    const user = await this.service.create(req.payload)
+    return {
+      status: 201,
+      payload: user
     }
   }
-
+}
