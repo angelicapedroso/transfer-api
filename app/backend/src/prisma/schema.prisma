@@ -17,7 +17,7 @@ model Users {
 
 model Accounts {
   id       Int            @id @default(autoincrement())
-  balance  Decimal        @default(100)
+  balance  Decimal        @db.Decimal(20, 2)
   debited  Transactions[] @relation(name: "debit")
   credited Transactions[] @relation(name: "credit")
   user     Users[]
@@ -29,6 +29,6 @@ model Transactions {
   creditedAccount   Accounts @relation(fields: [creditedAccountId], references: [id], name: "credit")
   debitedAccountId  Int
   creditedAccountId Int
-  value             Decimal
+  value             Decimal  @db.Decimal(20, 2)
   createdAt         DateTime @default(now())
 }
