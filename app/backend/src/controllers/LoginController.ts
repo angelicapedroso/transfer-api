@@ -1,4 +1,4 @@
-import { CreateUserService } from './../services/CreateUserService';
+import { LoginService } from './../services/LoginService';
 import {
   IController,
   IRequest,
@@ -6,11 +6,11 @@ import {
 } from '../adapters/controllerInterface';
 import { ValidationError } from '../errors/validationError';
 
-export class CreateUserController implements IController {
-  constructor(private service: CreateUserService) {}
+export class LoginController implements IController {
+  constructor(private service: LoginService) {}
 
-  async handle(req: IRequest): Promise<IResponse> {
-    const { username, password } = req.payload;
+  async handle(request: IRequest): Promise<IResponse> {
+    const { username, password } = request.payload;
 
     if (!username || typeof username !== 'string') {
       return {
@@ -31,25 +31,24 @@ export class CreateUserController implements IController {
     }
 
     try {
-      const user = await this.service.create(req.payload);
+      const token = await this.service.login({ username, password });
       return {
-        status: 201,
-        payload: user,
+        status: 200,
+        payload: token,
       };
-    } catch (err) {
-      if (err instanceof ValidationError) {
+    } catch (error) {
+      if (error instanceof ValidationError) {
         return {
           status: 400,
           payload: {
-            error: err.message,
+            message: error.message,
           },
         };
       }
-
       return {
         status: 500,
         payload: {
-          error: 'Internal server error',
+          message: 'Internal server error',
         },
       };
     }

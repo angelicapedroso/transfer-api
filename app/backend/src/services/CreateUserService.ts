@@ -13,7 +13,7 @@ export class CreateUserService {
     const { username, password } = user;
     const newUser = new User(username, password);
     const passwordHash = generatePasswordHash(newUser.getPassword());
-    newUser.setPassword(generatePasswordHash(passwordHash));
+    newUser.setPassword(passwordHash);
     await this.repository.create(newUser);
   }
 }
