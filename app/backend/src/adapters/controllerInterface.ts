@@ -1,7 +1,8 @@
 export type IRequest = {
   payload: any
   params: any
-  query: any
+  query: any,
+  headers: any
 }
 
 export type IResponse = {
@@ -14,5 +15,5 @@ export type INext = {
 }
 
 export interface IController {
-  handle(req: IRequest): Promise<IResponse>
+  handle(req: IRequest, next: INext): Promise<IResponse | undefined>
 }

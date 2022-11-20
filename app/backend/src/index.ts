@@ -6,7 +6,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use('/register', userRoute);
+app.use('/user', userRoute);
 app.use('/login', loginRoute);
 
 const PORT = 3333;
