@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { IAccountWithUser } from '../interfaces/accountInterface';
 import { GetAccountRepository } from '../services/GetAccountService';
 
 export class PrismaGetAccountRepository implements GetAccountRepository {
@@ -8,7 +9,7 @@ export class PrismaGetAccountRepository implements GetAccountRepository {
     this.prisma = prisma;
   }
 
-  async getAccount(id: number): Promise<any> {
+  async getAccount(id: number): Promise<IAccountWithUser | null> {
     const account = await this.prisma.users.findUnique({
       where: {
         id,
