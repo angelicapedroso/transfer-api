@@ -5,7 +5,6 @@ import { comparePasswordHash } from '../helpers/generatePasswordHash';
 import { generateToken } from '../helpers/generateToken';
 
 export interface LoginRepository {
-  // login(user: User): Promise<{ token: string }>;
   findUnique(user: User): Promise<IUser | null>;
 }
 
