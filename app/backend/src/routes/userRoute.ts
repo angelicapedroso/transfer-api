@@ -1,3 +1,4 @@
+import { GetUserTransactionsControllerFactory } from './../factories/GetUserTransactionsControllerFactory';
 import Router from 'express';
 import ExpressRoutesAdapter from '../adapters/express/express-routes.adapter';
 import { CreateUserControllerFactory } from '../factories/CreateUserControllerFactory';
@@ -10,9 +11,11 @@ const router = Router();
 const createUserController = CreateUserControllerFactory.make();
 const getAccountController = GetAccountControllerFactory.make();
 const createTransactionController = CreateTransactionControllerFactory.make();
+const getUserTransactionsController = GetUserTransactionsControllerFactory.make();
 
 router.post('/', ExpressRoutesAdapter.adapt(createUserController));
 router.get('/account/:id', AuthMiddleware, ExpressRoutesAdapter.adapt(getAccountController));
 router.post('/transaction', ExpressRoutesAdapter.adapt(createTransactionController));
+router.get('/transaction/:id', ExpressRoutesAdapter.adapt(getUserTransactionsController));
 
 export default router;

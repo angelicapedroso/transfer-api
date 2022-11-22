@@ -1,12 +1,12 @@
-import { GetAccountService } from './../services/GetAccountService';
+import { GetUserTransactionsService } from './../services/GetUserTransactionsService';
 import {
   IController,
   IRequest,
   IResponse,
 } from '../adapters/controllerInterface';
 
-export class GetAccountController implements IController {
-  constructor(private service: GetAccountService) {}
+export class GetUserTransactionsController implements IController {
+  constructor(private service: GetUserTransactionsService) {}
 
   async handle(req: IRequest): Promise<IResponse> {
     const { id } = req.params;
@@ -21,11 +21,11 @@ export class GetAccountController implements IController {
     }
 
     try {
-      const account = await this.service.getAccount(Number(id));
+      const transactions = await this.service.getUserTransactions(Number(id));
 
       return {
         status: 200,
-        payload: account,
+        payload: transactions,
       };
     } catch (err) {
       return {
