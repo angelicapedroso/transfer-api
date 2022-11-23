@@ -13,3 +13,11 @@ export interface ITransactionCreate {
   value: IDecimal;
   usernameCredited: string;
 }
+
+export interface ITransactionWithUser {
+  userCashIn: {
+    id: number;
+    username: string;
+  } | null;
+  transactions: ITransaction[];
+}

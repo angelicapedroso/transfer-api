@@ -1,5 +1,5 @@
 import { ValidationError } from '../errors/validationError';
-import { ITransaction } from '../interfaces/transactionInterface';
+import { ITransactionWithUser } from '../interfaces/transactionInterface';
 
 export interface IFilterTransactions {
   date?: Date;
@@ -8,7 +8,7 @@ export interface IFilterTransactions {
 }
 
 export interface FilterTransactionsRepository {
-  filterTransactions(data: IFilterTransactions): Promise<ITransaction[]>;
+  filterTransactions(data: IFilterTransactions): Promise<ITransactionWithUser>;
 }
 
 export class FilterTransactionsService {
@@ -16,7 +16,7 @@ export class FilterTransactionsService {
     private filterTransactionsRepository: FilterTransactionsRepository
   ) {}
 
-  async execute(data: IFilterTransactions): Promise<ITransaction[]> {
+  async execute(data: IFilterTransactions): Promise<ITransactionWithUser> {
     const transactions =
       await this.filterTransactionsRepository.filterTransactions(data);
 
